@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: admiral-playwright
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      playwright install chromium
+    startCommand: python server.py
+    plan: free
