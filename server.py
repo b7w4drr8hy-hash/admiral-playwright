@@ -28,9 +28,9 @@ async def fetch_admiral():
 
 @app.route("/events")
 def events():
-    return jsonify(asyncio.run(fetch_admiral()))
+    loop = asyncio.get_event_loop()
+    return jsonify(loop.run_until_complete(fetch_admiral()))
 
 if __name__ == "__main__":
     import os
-app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
-
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
