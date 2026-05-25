@@ -6,7 +6,17 @@ app = Flask(__name__)
 
 async def fetch_admiral():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+browser = await p.chromium.launch(
+    headless=True,
+    args=[
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-software-rasterizer"
+    ]
+)
+
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
             locale="de-AT"
