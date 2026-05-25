@@ -1,3 +1,9 @@
+from flask import Flask, jsonify
+import asyncio
+from playwright.async_api import async_playwright
+
+app = Flask(__name__)
+
 async def fetch_admiral():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -28,3 +34,12 @@ async def fetch_admiral():
 
         await browser.close()
         return data
+
+@app.route("/events")
+def events():
+    loop = asyncio.get_event_loop()
+    return jsonify(loop.run_until_complete(fetch_admiral()))
+
+if __name__ == "__main__":
+    import os
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
