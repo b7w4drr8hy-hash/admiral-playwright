@@ -1,2 +1,6 @@
-flask
+fastapi
+uvicorn[standard]
+pydantic
 playwright
+sqlite3-binary
+requests
